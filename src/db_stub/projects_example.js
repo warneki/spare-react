@@ -13,7 +13,7 @@ export const PROJECTS = [
     'date created':       '13.10.2019 18:35 UTC',
     'tags':               ['react', 'frontend', 'js', 'template', 'cs' ],
     'notes location':     'currently_on_repeat/react_tutorial.md',
-    'study sessions':     [3]
+    'study sessions':     [12, 13]
   },
   {
     'id':                 3,
@@ -21,7 +21,7 @@ export const PROJECTS = [
     'date created':       '14.10.2019 20:47 UTC',
     'tags':               ['cs', 'linux', 'bash' ],
     'notes location':     'snippets',
-    'study sessions':     [4]
+    'study sessions':     [3]
   },
   {
     'id':                 8,
@@ -46,5 +46,13 @@ export const PROJECTS = [
     'tags':               ['react', 'frontend', 'js', 'template', 'cs' ],
     'notes location':     'projects/react-scaffold/README.md',
     'study sessions':     [11]
+  },
+  {
+    'id':                 11,
+    'name':               'Htc1x: Simple data',
+    'date created':       '13.10.2019 11:28 UTC',
+    'tags':               ['cs', 'design', 'functional', 'berkley'  ],
+    'notes location':     'currently on repeat',
+    'study sessions':     [1, 2, 5, 6, 10],
   },
 ];

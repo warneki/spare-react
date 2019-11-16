@@ -11,7 +11,7 @@ class ProjectList extends Component {
   render(){
     const projects_list = this.props.projects.map((project) => {
       return (
-        <Project project={project} key={project.id.toString()} />
+        <Project project={project} sessions={this.props.sessions} key={project.id.toString()} />
       );
     });
 
