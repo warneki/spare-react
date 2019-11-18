@@ -5,6 +5,7 @@ export const SESSIONS = {
     'timestamp':         '13.10.2019',
     'project':      'Htc1x: Simple data',
     'description':  'Module 1: Summary',
+    'repeats_on':   ['14.10.2019', ]
   },
   2: {
     'id':           2,
@@ -36,6 +37,7 @@ export const SESSIONS = {
     'date':         '26.10.2019',
     'project':      'Words Spun out of Images',
     'description':  '1st week',
+    'repeats_on':   ['2019-11-14', '2019-11-15', '2019-11-23', '2019-12-09', '2020-01-08', '2020-03-24', '2020-07-12']
   },
   10: {
     'id':           10,
@@ -53,9 +55,10 @@ export const SESSIONS = {
 
   12: {
     'id':           12,
-    'date':         '11.11.2019',
+    'date':         '15.11.2019',
     'project':      'React Tutorial',
     'description':  'Reading my notes',
+    'repeats_on':   ['2019-11-15', '2019-11-16', '2019-11-24', '2019-12-10', '2020-01-09', '2020-03-25', '2020-07-13']
   },
 
   13: {

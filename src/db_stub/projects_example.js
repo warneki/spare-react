@@ -44,7 +44,7 @@ export const PROJECTS = [
     'name':               'React from scratch without "Create React App"',
     'date created':       '11.11.2019 11:35 UTC',
     'tags':               ['react', 'frontend', 'js', 'template', 'cs' ],
-    'notes location':     'projects/react-scaffold/README.md',
+    'notes location':     'projects/react-scaffold/react_from_scratch.md',
     'study sessions':     [11]
   },
   {
