@@ -1,6 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Button, Collapse, CardBody, Card } from 'reactstrap';
-import SessionList from './SessionListComponent'
+
+import ProjectSessions from './ProjectSessionsComponent'
 
 
 const Project = (props) => {
@@ -8,9 +9,8 @@ const Project = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const project_sessions = props.project['study sessions'].map(
-    (session_id) => props.sessions[session_id]
-  );
+  const project_sessions = props.sessions
+    .filter((sessn) => props.project.study_sessions.includes(sessn.id));
 
   return (
     <Row className="mt-2">
@@ -22,9 +22,9 @@ const Project = (props) => {
           <Card >
             <CardBody>
               <div>
-                Notes in: {props.project['notes location']}
+                Notes in: {props.project.notes_location}
               </div>
-              <SessionList sessions={project_sessions} />
+              <ProjectSessions sessions={project_sessions} />
             </CardBody>
           </Card>
         </Collapse>
