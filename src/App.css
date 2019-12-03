@@ -6,3 +6,14 @@
 input, label {
   width: 100%;
 }
+
+html, body {
+    background-image: url("/celebration.png");
+    height: 100%;
+
+    overflow-x: hidden;
+}
+
+.container {
+  background-color: white;
+}
