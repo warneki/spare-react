@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import addRepeatsForNewSession from './repeatsActionCreators';
+import { addRepeatsForNewSession } from './repeatsActionCreators';
 import { serverURL } from '../shared/config';
 
 
@@ -121,13 +121,15 @@ export const postNewSession = (form) => (dispatch) => {
   .then(response => response.json())
   .then(response => dispatch(sessionSuccessfullyCreated(response)))
   .then(response => {
+    // TODO: move all this transaction logic to server
     dispatch(putSessionIntoProject(response.session.id, response.session.project))
       .then(projects => dispatch(updateProjectWithNewSession(projects, response.session)))
+    dispatch(addRepeatsForNewSession(response.session))
   })
   .catch(error => {
     console.log('Post session failed: ', error.message);
     alert('Your session was not saved =(\nError: '+ error.message);
-  })
+  });
 }
 
 
@@ -193,3 +195,41 @@ export const updateProjectWithNewSession = (projects, session) => (dispatch) => 
   .then(response => response.json())
   .then(response => dispatch(addedSessionToProject(response)))
 }
+
+
+// <--- add new repeats to their session --->
+
+export const putRepeatsIntoSession = (repeats, session) => (dispatch) => {
+  const repeat_dates = repeats.map(repeat => repeat.repeat_on);
+  session = {...session, repeats_on: repeat_dates};
+
+  return fetch(serverURL + 'sessions/' + session.id, {
+    method: 'PUT',
+    body: JSON.stringify(session),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin'
+  })
+  .then(response => {
+    if (response.ok) {
+      return response;
+    }
+    else {
+      var error = new Error('Error ' + response.status + ': ' + response.statusText);
+      error.response = response;
+      throw error;
+    }},
+    error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+    })
+  .then(response => response.json())
+  .then(response => dispatch(updatedSessionWithRepeats(response)))
+}
+
+
+export const updatedSessionWithRepeats = (session) => ({
+  type: ActionTypes.UPDATED_SESSION_WITH_REPEATS,
+  session: session
+});
