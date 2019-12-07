@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { addRepeatsForNewSession } from './repeatsActionCreators';
 import { serverURL } from '../shared/config';
+import moment from 'moment';
 
 
 // <--- fetchProjects --->
@@ -91,7 +92,7 @@ export const sessionSuccessfullyCreated = (session) => ({
 
 export const postNewSession = (form) => (dispatch) => {
   const newSession = {...form,
-    date: new Date().toISOString().slice(0, 10),
+    date: moment().format('YYYY-MM-DD'),
   };
 
   // const bearer = 'Bearer ' + localStorage.getItem('token');

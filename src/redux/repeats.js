@@ -1,4 +1,6 @@
 import * as ActionTypes from './ActionTypes';
+import moment from 'moment';
+
 
 export const Repeats = (state = {
     isLoading: true,
@@ -10,7 +12,7 @@ export const Repeats = (state = {
   switch(action.type) {
 
     case ActionTypes.TODAY_REPEATS_RECEIVED:
-      const today = new Date().toISOString().slice(0, 10);
+      const today = moment().format('YYYY-MM-DD');
       const todayRepeats = action.repeats.filter((repeat) => {
         return repeat.repeat_on === today;
       });
