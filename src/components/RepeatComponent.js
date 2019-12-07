@@ -3,6 +3,10 @@ import { Row, Col, Button, Collapse, CardBody, Card } from 'reactstrap';
 
 
 const Repeat = (props) => {
+  const days_ago_phrase = props.repeat.days === 0 ? "today" :
+    (props.repeat.days === 1 ? "yesterday" : props.repeat.days + " days ago");
+
+
   return (
     <Row className="mt-2">
 
@@ -11,7 +15,7 @@ const Repeat = (props) => {
       </Col>
 
       <Col md="5"  xs="12">
-        Studied {props.repeat.days} days ago
+        Studied {days_ago_phrase}
       </Col>
 
     </Row>

@@ -8,6 +8,7 @@ import { fetchTodayRepeats } from '../redux/repeatsActionCreators';
 import ProjectsList from './ProjectsListComponent';
 import InputSession from './InputSessionComponent';
 import TodayRepeatList from './TodayRepeatListComponent';
+import LearnedTodayList from './LearnedTodayListComponent';
 
 
 const mapStateToProps = state => {
@@ -49,6 +50,10 @@ class Main extends Component {
             postNewSession={this.props.postNewSession}
           />
           <TodayRepeatList
+            repeats={this.props.repeats}
+            sessions={this.props.sessions}
+          />
+          <LearnedTodayList
             repeats={this.props.repeats}
             sessions={this.props.sessions}
           />

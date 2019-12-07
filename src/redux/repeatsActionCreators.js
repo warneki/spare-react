@@ -52,6 +52,7 @@ export const addRepeatsForNewSession = (session) => (dispatch) => {
     const session_created = moment(session.date);
     return {
       "done": false,
+      "id": session.id + 1000 + days,
       "days": days,
       "session_id": session.id,
       "repeat_on": session_created.add(days, 'days').format('YYYY-MM-DD'),
