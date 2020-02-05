@@ -17,7 +17,9 @@ export const Projects = (state = {
 
     case ActionTypes.UPDATED_PROJECT:
       return {...state, projects: state.projects.map(
-           (prjt) => prjt.id === action.project.id ?
+           (prjt) => prjt._id === action.project._id ?
+               // TODO: can we do it some other way; does it influence which components rerender?
+               // {...prjt, study_sessions: [...state.study_sessions, action.session._id] } :
                 {...prjt, study_sessions: action.project.study_sessions} :
                 prjt
        )};

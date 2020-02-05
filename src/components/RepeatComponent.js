@@ -21,7 +21,7 @@ const Repeat = (props) => {
     </Row>
   );
 
-}
+};
 
 
 export default Repeat;

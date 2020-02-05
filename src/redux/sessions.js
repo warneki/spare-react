@@ -18,13 +18,6 @@ export const Sessions = (state = {
       case ActionTypes.CREATED_SESSION:
         return {...state, sessions: state.sessions.concat(action.session)};
 
-      case ActionTypes.UPDATED_SESSION_WITH_REPEATS:
-        return {...state, sessions: state.sessions.map((session) =>
-                    session.id === action.session.id ?
-                      {...session, repeats_on: action.session.repeats_on} :
-                      session)
-               };
-
       default:
         return state;
     }

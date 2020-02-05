@@ -9,8 +9,8 @@ const Project = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const project_sessions = props.sessions
-    .filter((sessn) => props.project.study_sessions.includes(sessn.id));
+  const project_sessions = props.sessions ?
+      props.sessions.filter((sessn) => props.project.study_sessions.includes(sessn._id)) : [];
 
   return (
     <Row className="mt-2">

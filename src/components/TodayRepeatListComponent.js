@@ -31,13 +31,13 @@ function TodayRepeatList(props) {
   const todays_repeats_list = props.repeats.todayRepeats
     .map((repeat) => {
       const repeat_session = props.sessions.filter((session) => {
-        return session.id === repeat.session_id;
+        return session._id === repeat.session_id;
       })[0];
       return (
         <Repeat
           repeat={repeat}
           session={repeat_session}
-          key={repeat.id.toString()} />
+          key={repeat._id.toString()} />
       );
     });
 
@@ -45,7 +45,7 @@ function TodayRepeatList(props) {
     <Container>
       <Row className="mb-2">
         <Col >
-          To repeat Today:
+          <h4>To repeat Today:</h4>
         </Col>
       </Row>
 

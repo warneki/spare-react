@@ -17,7 +17,7 @@ function ProjectsList(props) {
 
   return props.projects.projects.map((project) => {
     return (
-      <Project project={project} sessions={props.sessions} key={project.id.toString()} />
+      <Project project={project} sessions={props.sessions} key={project._id.toString()} />
     );
   });
 }

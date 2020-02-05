@@ -28,7 +28,7 @@ const InputSession = (props) => {
     );
   }
     const projectsList = props.projects.projects.map((project) => {
-      return (<option key={project.id.toString()}>{project.name}</option>);
+      return (<option key={project._id.toString()}>{project.name}</option>);
     });
 
     return (

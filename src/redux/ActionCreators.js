@@ -87,19 +87,15 @@ export const sessionsLoadedSuccess = (sessions) => ({
 
 export const sessionSuccessfullyCreated = (session) => ({
   type: ActionTypes.CREATED_SESSION,
-  session: session
+  session: session,
 });
 
 export const postNewSession = (form) => (dispatch) => {
-  const newSession = {...form,
-    date: moment().format('YYYY-MM-DD'),
-  };
-
   // const bearer = 'Bearer ' + localStorage.getItem('token');
 
   return fetch(serverURL + 'sessions', {
     method: 'POST',
-    body: JSON.stringify(newSession),
+    body: JSON.stringify(form),
     headers: {
       'Content-Type': 'application/json',
       // 'Authorization': bearer
@@ -120,117 +116,18 @@ export const postNewSession = (form) => (dispatch) => {
       throw errmess;
     })
   .then(response => response.json())
-  .then(response => dispatch(sessionSuccessfullyCreated(response)))
-  .then(response => {
-    // TODO: move all this transaction logic to server
-    dispatch(putSessionIntoProject(response.session.id, response.session.project))
-      .then(projects => dispatch(updateProjectWithNewSession(projects, response.session)))
-    dispatch(addRepeatsForNewSession(response.session))
-  })
+  .then(response => dispatch(sessionSuccessfullyCreated(response.session))
+      .then(dispatch(updateProjectWithNewSession(response.project))
+          .then(dispatch(addRepeatsForNewSession(response.repeats)))
+      )
+  )
   .catch(error => {
     console.log('Post session failed: ', error.message);
     alert('Your session was not saved =(\nError: '+ error.message);
   });
-}
+};
 
-
-// <--- putSessionIntoProject ---> [TODO: STUB TILL NORMAL DB]
-
-export const addedSessionToProject = (project) => ({
+export const updateProjectWithNewSession = (project) => ({
   type: ActionTypes.UPDATED_PROJECT,
   project: project
-});
-
-export const putSessionIntoProject = (session_id, project_name) => (dispatch) => {
-  return fetch(serverURL + 'projects')
-    .then(response => {
-      if (response.ok) {
-        return response;
-      }
-      else {
-        var error = new Error('Error ' + response.status + ': ' + response.statusText);
-        error.response = response;
-        throw error;
-      }},
-      error => {
-        var errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(projects => {
-      return projects;
-    })
-    .catch(error => {
-      console.log('Add session to project failed: ', error.message);
-    });
-  }
-
-export const updateProjectWithNewSession = (projects, session) => (dispatch) => {
-  var project = projects.filter((project) => project.name === session.project)[0];
-
-  project.study_sessions.push(session.id);
-  // const bearer = 'Bearer ' + localStorage.getItem('token');
-
-  return fetch(serverURL + 'projects/' + project.id.toString(), {
-    method: 'PUT',
-    body: JSON.stringify(project),
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Authorization': bearer
-    },
-    credentials: 'same-origin'
-  })
-  .then(response => {
-    if (response.ok) {
-      return response;
-    }
-    else {
-      var error = new Error('Error ' + response.status + ': ' + response.statusText);
-      error.response = response;
-      throw error;
-    }},
-    error => {
-      var errmess = new Error(error.message);
-      throw errmess;
-    })
-  .then(response => response.json())
-  .then(response => dispatch(addedSessionToProject(response)))
-}
-
-
-// <--- add new repeats to their session --->
-
-export const putRepeatsIntoSession = (repeats, session) => (dispatch) => {
-  const repeat_dates = repeats.map(repeat => repeat.repeat_on);
-  session = {...session, repeats_on: repeat_dates};
-
-  return fetch(serverURL + 'sessions/' + session.id, {
-    method: 'PUT',
-    body: JSON.stringify(session),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin'
-  })
-  .then(response => {
-    if (response.ok) {
-      return response;
-    }
-    else {
-      var error = new Error('Error ' + response.status + ': ' + response.statusText);
-      error.response = response;
-      throw error;
-    }},
-    error => {
-      var errmess = new Error(error.message);
-      throw errmess;
-    })
-  .then(response => response.json())
-  .then(response => dispatch(updatedSessionWithRepeats(response)))
-}
-
-
-export const updatedSessionWithRepeats = (session) => ({
-  type: ActionTypes.UPDATED_SESSION_WITH_REPEATS,
-  session: session
 });

@@ -20,7 +20,7 @@ function SessionList(props) {
     if (session == null) {
       return <span></span>;
     }
-    return (<Session session={session} key={session.id.toString()} />);
+    return (<Session session={session} key={session._id.toString()} />);
   });
 
 };

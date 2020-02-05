@@ -30,13 +30,13 @@ function LearnedTodayList(props) {
   const learned_today_list = props.repeats.learnedToday
     .map((item) => {
       const item_session = props.sessions.filter((session) => {
-        return session.id === item.session_id;
+        return session._id === item.session_id;
       })[0];
       return (
         <Repeat
           repeat={item}
           session={item_session}
-          key={item.id.toString()} />
+          key={item._id.toString()} />
       );
     });
 
@@ -44,7 +44,7 @@ function LearnedTodayList(props) {
     <Container>
       <Row className="mb-2">
         <Col >
-          Things you've learned today:
+          <h4>Things you've learned today:</h4>
         </Col>
       </Row>
 

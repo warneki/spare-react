@@ -12,13 +12,16 @@ export const Repeats = (state = {
   switch(action.type) {
 
     case ActionTypes.TODAY_REPEATS_RECEIVED:
-      const today = moment().format('YYYY-MM-DD');
-      const todayRepeats = action.repeats.filter((repeat) => {
-        return repeat.repeat_on === today;
-      });
+      const today = moment().format('DD-MM-YYYY');
+      // let yesterday = moment().add(1, 'day').format('DD-MM-YYYY');
+      const todayRepeats = action.repeats ? action.repeats.filter((repeat) => {
+        // Todo: same_day function; filter in 2 groups
+        let repeat_on = moment(repeat.repeat_on).format('DD-MM-YYYY');
+        return repeat_on === today;
+      }) : [];
 
       const toRepeatToday = todayRepeats.filter((repeat) => {
-        return repeat.days !=0;
+        return repeat.days !==0;
       });
       const learnedToday = todayRepeats.filter((repeat) => {
         return repeat.days ===0;
@@ -39,4 +42,4 @@ export const Repeats = (state = {
     default:
       return state;
   }
-}
+};
