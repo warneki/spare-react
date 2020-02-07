@@ -1,15 +1,16 @@
 import * as ActionTypes from './ActionTypes';
-import { addRepeatsForNewSession } from './repeatsActionCreators';
+import {addRepeatsForNewSession, repeatsLoadFailed, repeatsLoading, repeatsLoadSuccess} from './repeatsActionCreators';
 import { serverURL } from '../shared/config';
-import moment from 'moment';
 
 
-// <--- fetchProjects --->
+// <--- fetchEverything --->
 
-export const fetchProjects = () => (dispatch) => {
-  dispatch(projectsLoading(true));
+export const fetchTodayRepeatsSessionsProjects = () => (dispatch) => {
+  dispatch(projectsLoading());
+  dispatch(sessionsLoading());
+  dispatch(repeatsLoading());
 
-  return fetch(serverURL + 'projects')
+  return fetch(serverURL + 'api/today')
     .then(response => {
       if (response.ok) {
         return response;
@@ -24,9 +25,17 @@ export const fetchProjects = () => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(projects => dispatch(projectsLoadedSuccess(projects)))
-    .catch(error => dispatch(projectsLoadFailed(error.message)));
-}
+    .then(response => {
+      dispatch(sessionsLoadedSuccess(response.sessions));
+      dispatch(projectsLoadedSuccess(response.projects));
+      dispatch(repeatsLoadSuccess(response.repeats));
+    })
+    .catch(error => {
+      dispatch(projectsLoadFailed(error.message));
+      dispatch(sessionsLoadFailed(error.message));
+      dispatch(repeatsLoadFailed(error.message));
+    });
+};
 
 export const projectsLoading = () => ({
   type: ActionTypes.PROJECTS_LOADING
@@ -44,28 +53,6 @@ export const projectsLoadedSuccess = (projects) => ({
 
 
 // <--- fetchSessions --->
-
-export const fetchSessions = () => (dispatch) => {
-  dispatch(sessionsLoading());
-
-  return fetch(serverURL + 'sessions')
-    .then(response => {
-      if (response.ok) {
-        return response;
-      }
-      else {
-        var error = new Error('Error ' + response.status + ': ' + response.statusText);
-        error.response = response;
-        throw error;
-      }},
-      error => {
-        var errmess = new Error(error.message);
-        throw errmess;
-      })
-    .then(response => response.json())
-    .then(sessions => dispatch(sessionsLoadedSuccess(sessions)))
-    .catch(error => dispatch(sessionsLoadFailed(error.message)));
-}
 
 export const sessionsLoading = () => ({
   type: ActionTypes.SESSIONS_LOADING

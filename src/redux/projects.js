@@ -27,4 +27,4 @@ export const Projects = (state = {
     default:
       return state;
   }
-}
+};

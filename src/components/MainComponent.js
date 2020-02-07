@@ -3,8 +3,7 @@ import { Container } from 'reactstrap';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import { postNewSession, fetchProjects, fetchSessions } from '../redux/ActionCreators';
-import { fetchTodayRepeats } from '../redux/repeatsActionCreators';
+import { postNewSession, fetchTodayRepeatsSessionsProjects} from '../redux/ActionCreators';
 import ProjectsList from './ProjectsListComponent';
 import InputSession from './InputSessionComponent';
 import TodayRepeatList from './TodayRepeatListComponent';
@@ -17,12 +16,10 @@ const mapStateToProps = state => {
     repeats: state.repeats,
     sessions: state.sessions.sessions,
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchProjects: () => {dispatch(fetchProjects())},
-  fetchTodayRepeats: () => {dispatch(fetchTodayRepeats())},
-  fetchSessions: () => {dispatch(fetchSessions())},
+  fetchTodayRepeatsSessionsProjects: () => {dispatch(fetchTodayRepeatsSessionsProjects())},
   resetNewSessionForm: () => { dispatch(actions.reset('new_study_session'))},
   postNewSession: (new_session) => dispatch(postNewSession(new_session)),
 });
@@ -30,9 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
 class Main extends Component {
 
   componentDidMount() {
-    this.props.fetchSessions();
-    this.props.fetchProjects();
-    this.props.fetchTodayRepeats();
+    this.props.fetchTodayRepeatsSessionsProjects();
   }
 
   render() {
@@ -59,7 +54,7 @@ class Main extends Component {
           />
         </Container>
       );
-    }
+    };
 
     return (
       <div>
